@@ -158,6 +158,7 @@ function Profile() {
                 type="text"
                 maxLength={40}
                 required
+                autoComplete="off"
               ></input>
             </div>
             <div className="input-box">
@@ -168,6 +169,7 @@ function Profile() {
                 type="email"
                 maxLength={60}
                 required
+                autoComplete="off"
               ></input>
             </div>
             <div className="input-box">
@@ -177,6 +179,7 @@ function Profile() {
                 placeholder={"********"}
                 type="password"
                 maxLength={20}
+                autoComplete="new-password"
               ></input>
             </div>
             <div className="button-container">

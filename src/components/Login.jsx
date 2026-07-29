@@ -105,6 +105,7 @@ function Login() {
                   type="email"
                   maxLength={60}
                   required
+                  autoComplete="off"
                 ></input>
               </div>
 
@@ -116,6 +117,7 @@ function Login() {
                   type="password"
                   maxLength={20}
                   required
+                  autoComplete="new-password"
                 ></input>
               </div>
 

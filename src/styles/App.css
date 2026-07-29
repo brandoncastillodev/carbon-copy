@@ -557,6 +557,19 @@ input:focus {
   box-shadow: none;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-text-fill-color: #FFF !important;
+  caret-color: #FFB800 !important;
+}
+
+input:autofill {
+  background-color: transparent !important;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
