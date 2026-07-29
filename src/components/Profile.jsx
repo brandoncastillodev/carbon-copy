@@ -26,6 +26,14 @@ function Profile() {
   const [favs, setFavs] = useState([]);
   const [modFav, setModFav] = useState(false);
 
+  function formatName(style, format) {
+    const s = style
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+    const f = format.charAt(0).toUpperCase() + format.slice(1);
+    return s + " - " + f;
+  }
+
   //obtener usuario
   useEffect(() => {
     axios
@@ -184,7 +192,7 @@ function Profile() {
           <div className="favs-container">
             {favs.map((fav, id) => (
               <div className="one-user-fav mini-top" key={id}>
-                {fav.style.style} {fav.style.format}
+                {formatName(fav.style.style, fav.style.format)}
                 <div
                   className="color-fav"
                   style={{ backgroundColor: fav.style.color }}
