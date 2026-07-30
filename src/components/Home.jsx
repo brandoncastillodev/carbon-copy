@@ -33,6 +33,11 @@ import "ace-builds/src-noconflict/theme-idle_fingers";
 import "ace-builds/src-noconflict/theme-mono_industrial";
 import "ace-builds/src-noconflict/theme-cloud9_night";
 import "ace-builds/src-noconflict/theme-github_dark";
+import "ace-builds/src-noconflict/theme-clouds_midnight";
+import "ace-builds/src-noconflict/theme-merbivore_soft";
+import "ace-builds/src-noconflict/theme-tomorrow_night_eighties";
+import "ace-builds/src-noconflict/theme-kr_theme";
+import "ace-builds/src-noconflict/theme-gob";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/userState";
 import { setFav } from "../state/favState";
@@ -78,6 +83,11 @@ function Home() {
     mono_industrial: '"JetBrains Mono", monospace',
     cloud9_night: '"Source Code Pro", monospace',
     github_dark: '"JetBrains Mono", monospace',
+    clouds_midnight: '"Inconsolata", monospace',
+    merbivore_soft: '"Source Code Pro", monospace',
+    tomorrow_night_eighties: '"IBM Plex Mono", monospace',
+    kr_theme: '"Fira Code", monospace',
+    gob: '"Space Mono", monospace',
   };
   const [code, setCode] = useState(
     `let members = [{name:'Dylan',
@@ -385,6 +395,11 @@ member.name)`
               <option value="mono_industrial">Mono Industrial</option>
               <option value="cloud9_night">Cloud9 Night</option>
               <option value="github_dark">GitHub Dark</option>
+              <option value="clouds_midnight">Clouds Midnight</option>
+              <option value="merbivore_soft">Merbivore Soft</option>
+              <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
+              <option value="kr_theme">KR Theme</option>
+              <option value="gob">Gob</option>
             </select>
             <select
               value={mode}
@@ -430,6 +445,11 @@ member.name)`
               <option value="#BF616A">Nord Red</option>
               <option value="#81A1C1">Nord Blue</option>
               <option value="#88C0D0">Nord Cyan</option>
+              <option value="#A3BE8C">Nord Green</option>
+              <option value="#EBCB8B">Nord Yellow</option>
+              <option value="#E06C75">One Dark Soft Red</option>
+              <option value="#C678DD">One Dark Soft Purple</option>
+              <option value="#5E81AC">Nord Blue</option>
             </select>
           </div>
           <div className="navbar3">
@@ -477,7 +497,7 @@ member.name)`
               onChange={(newCode) => setCode(newCode)}
               width="100%"
               height="100%"
-              fontSize={"13px"}
+              fontSize={"14px"}
               maxLines={"auto"}
               showGutter={false}
               highlightActiveLine={false}
