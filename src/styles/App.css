@@ -592,10 +592,11 @@ input:autofill {
 .loader {
   width: 30px;
   height: 30px;
-  border: 3px solid rgba(255,255,255,0.3);
-  border-top-color: #fff;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: #FFB800;
+  border-right-color: #FF6188;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   margin: 1rem auto;
 }
 
