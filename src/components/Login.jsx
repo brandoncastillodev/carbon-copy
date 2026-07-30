@@ -133,21 +133,27 @@ function Login() {
                 </p>
               </div>
 
-              <div className="button-container2 top">
-                <button className="submitButton" disabled={loading}>
-                  {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
-                  <span style={{ marginLeft: loading ? 8 : 0 }}>Login</span>
-                </button>
-              </div>
+              {loading ? (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <span className="loader" style={{ width: "30px", height: "30px" }}></span>
+                </div>
+              ) : (
+                <div className="button-container2 top">
+                  <button className="submitButton">Login</button>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="button-container top">
-            <button className="submitButton" disabled={loading}>
-              {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
-              <span style={{ marginLeft: loading ? 8 : 0 }}>Login</span>
-            </button>
-          </div>
+          {loading ? (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <span className="loader" style={{ width: "30px", height: "30px" }}></span>
+            </div>
+          ) : (
+            <div className="button-container top">
+              <button className="submitButton">Login</button>
+            </div>
+          )}
         </div>
       </form>
     </div>

@@ -136,21 +136,27 @@ function Register() {
                 <Link to="/login">Log in</Link>
               </p>
 
-              <div className="button-container2 top">
-                <button className="submitButton" disabled={loading}>
-                  {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
-                  <span style={{ marginLeft: loading ? 8 : 0 }}>Register</span>
-                </button>
-              </div>
+              {loading ? (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <span className="loader" style={{ width: "30px", height: "30px" }}></span>
+                </div>
+              ) : (
+                <div className="button-container2 top">
+                  <button className="submitButton">Register</button>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="button-container">
-            <button className="submitButton top" disabled={loading}>
-              {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
-              <span style={{ marginLeft: loading ? 8 : 0 }}>Sign Up</span>
-            </button>
-          </div>
+          {loading ? (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <span className="loader" style={{ width: "30px", height: "30px" }}></span>
+            </div>
+          ) : (
+            <div className="button-container">
+              <button className="submitButton top">Sign Up</button>
+            </div>
+          )}
         </div>
       </form>
     </div>
