@@ -25,6 +25,7 @@ function Profile() {
   const [password, setPass] = useState("");
   const [favs, setFavs] = useState([]);
   const [modFav, setModFav] = useState(false);
+  const [loadingFavs, setLoadingFavs] = useState(true);
 
   function formatName(style, format) {
     const s = style
@@ -93,11 +94,13 @@ function Profile() {
 
   //obtiene todos los favoritos
   useEffect(() => {
+    setLoadingFavs(true);
     const uid = id;
     axios
       .get(`https://carbon-copy.onrender.com/api/favorites/${uid}`)
       .then((fav) => setFavs(fav.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setLoadingFavs(false));
   }, [modFav]);
 
   //selecciona favorito
@@ -193,8 +196,14 @@ function Profile() {
         <div className="mini-top favorites font-me">
           <h4 style={{ color: "white" }}>Favorites</h4>
           <div className="favs-container">
-            {favs.map((fav, id) => (
-              <div className="one-user-fav mini-top" key={id}>
+            {loadingFavs ? (
+              <div className="loader"></div>
+            ) : favs.length === 0 ? (
+              <p style={{ color: "white", textAlign: "center", padding: "1rem" }}>
+                No favorites yet
+              </p>
+            ) : favs.map((fav, id) => (
+                <div className="one-user-fav mini-top" key={id}>
                 {formatName(fav.style.style, fav.style.format)}
                 <div
                   className="color-fav"
