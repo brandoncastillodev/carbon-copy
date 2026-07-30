@@ -336,16 +336,16 @@ member.name)`
     <div className="all">
       <div className="box">
         <div className="navbar">
-          <div className="download" onClick={handleDownload}>
-            <img src={group31} alt="vector"></img>
+          <div className="download" onClick={handleDownload} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDownload(); }}>
+            <img src={group31} alt="Download"></img>
           </div>
           {like ? (
-            <div className="like-button" onClick={handleDislike}>
-              <img src={group32b} alt="vector"></img>
+            <div className="like-button" onClick={handleDislike} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDislike(); }}>
+              <img src={group32b} alt="Dislike"></img>
             </div>
           ) : (
-            <div className="like-button" onClick={handleLike}>
-              <img src={group32} alt="vector"></img>
+            <div className="like-button" onClick={handleLike} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleLike(); }}>
+              <img src={group32} alt="Like"></img>
             </div>
           )}
 
@@ -453,28 +453,28 @@ member.name)`
             </select>
           </div>
           <div className="navbar3">
-            <div className="download" onClick={handleDownload}>
-              <img src={group31} alt="vector"></img>
+            <div className="download" onClick={handleDownload} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDownload(); }}>
+              <img src={group31} alt="Download"></img>
             </div>
             {like ? (
-              <div className="like-button" onClick={handleDislike}>
-                <img src={group32b} alt="vector"></img>
+              <div className="like-button" onClick={handleDislike} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleDislike(); }}>
+                <img src={group32b} alt="Dislike"></img>
               </div>
             ) : (
-              <div className="like-button" onClick={handleLike}>
-                <img src={group32} alt="vector"></img>
+              <div className="like-button" onClick={handleLike} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleLike(); }}>
+                <img src={group32} alt="Like"></img>
               </div>
             )}
 
-            <Link to={"/login"} onClick={logOut}>
+            <Link to={"/login"} onClick={logOut} aria-label="Log out">
               <div className="home-icon-div" style={{ padding: "4px" }}>
-                <img src={exit} alt="vector"></img>
+                <img src={exit} alt="Log out"></img>
               </div>
             </Link>
 
             {user.id ? (
-              <Link to={`/user/${user.id}`} onClick={cerrarFav}>
-                <img src={group34} alt="vector"></img>
+              <Link to={`/user/${user.id}`} onClick={cerrarFav} aria-label="Profile">
+                <img src={group34} alt="Profile"></img>
               </Link>
             ) : (
               <></>
