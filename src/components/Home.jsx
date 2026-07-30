@@ -35,6 +35,11 @@ import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/theme-kuroir";
 import "ace-builds/src-noconflict/theme-ambiance";
+import "ace-builds/src-noconflict/theme-nord_dark";
+import "ace-builds/src-noconflict/theme-one_dark";
+import "ace-builds/src-noconflict/theme-github_dark";
+import "ace-builds/src-noconflict/theme-gruvbox";
+import "ace-builds/src-noconflict/theme-cobalt";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/userState";
 import { setFav } from "../state/favState";
@@ -360,6 +365,11 @@ member.name)`
               <option value="tomorrow_night">Tomorrow Night</option>
               <option value="twilight">Twilight</option>
               <option value="xcode">XCode</option>
+              <option value="nord_dark">Nord Dark</option>
+              <option value="one_dark">One Dark</option>
+              <option value="github_dark">GitHub Dark</option>
+              <option value="gruvbox">Gruvbox</option>
+              <option value="cobalt">Cobalt</option>
             </select>
             <select
               value={mode}
