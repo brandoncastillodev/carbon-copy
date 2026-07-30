@@ -400,22 +400,21 @@ member.name)`
               onKeyDown={handleKeyDownC}
               id="colorSelect"
             >
-              <option value="#FFB800">Color</option>
-              <option value="#B0E0E6">Powder Blue</option>
-              <option value="#C8A2C8">Lavender</option>
-              <option value="#FFA07A">Light Salmon</option>
-              <option value="#98FB98">Pale Green</option>
-              <option value="#FFB6C1">Light Pink</option>
-              <option value="#87CEFA">Light Sky Blue</option>
-              <option value="#20B2AA">Light Sea Green</option>
-              <option value="#DDA0DD">Plum</option>
-              <option value="#F0E68C">Khaki</option>
-              <option value="#FAFAD2">Light Goldenrod Yellow</option>
-              <option value="#FFDAB9">Peach Puff</option>
-              <option value="#B0C4DE">Light Steel Blue</option>
-              <option value="#90EE90">Light Green</option>
-              <option value="#FFDEAD">Navajo White</option>
-              <option value="#FFC0CB">Pink</option>
+              <option value="#FFB800">Carbon Yellow</option>
+              <option value="#FF6188">One Dark Red</option>
+              <option value="#FC9867">One Dark Orange</option>
+              <option value="#FFD866">One Dark Yellow</option>
+              <option value="#A9DC76">One Dark Green</option>
+              <option value="#AB9DF2">One Dark Purple</option>
+              <option value="#78DCE8">One Dark Cyan</option>
+              <option value="#CC241D">Gruvbox Red</option>
+              <option value="#D79921">Gruvbox Yellow</option>
+              <option value="#B16286">Gruvbox Purple</option>
+              <option value="#458588">Gruvbox Blue</option>
+              <option value="#689D6A">Gruvbox Aqua</option>
+              <option value="#BF616A">Nord Red</option>
+              <option value="#81A1C1">Nord Blue</option>
+              <option value="#88C0D0">Nord Cyan</option>
             </select>
           </div>
           <div className="navbar3">
