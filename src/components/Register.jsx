@@ -54,7 +54,9 @@ function Register() {
           <img className="pinA pinA2" src={group19}></img>
           <img className="pinB pinB2" src={group13}></img>
 
-          <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
+          <Link to={"/login"}>
+            <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
+          </Link>
 
           <p className="subtitulo top font-me"> Give style to your code</p>
 
