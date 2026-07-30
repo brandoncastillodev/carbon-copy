@@ -47,7 +47,7 @@ function ForgotPass() {
       <form onSubmit={handleForgot}>
         <div className="box">
           <div className="navbar">
-            <Link to={"/login"}>
+            <Link to={"/home"}>
               <div className="home-icon-div">
                 <img src={home} alt="vector" style={{ width: "24px" }}></img>
               </div>
@@ -59,7 +59,7 @@ function ForgotPass() {
           <img className="pinA pinA2" src={group19}></img>
           <img className="pinB pinB2" src={group13}></img>
 
-          <Link to={"/login"}>
+          <Link to={"/home"}>
             <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
           </Link>
 
@@ -73,7 +73,7 @@ function ForgotPass() {
           <div className="contenido">
             <div className="contenido-big">
               <div className="navbar2">
-                <Link to={"/login"}>
+                <Link to={"/home"}>
                   <div className="home-icon-div">
                     <img
                       src={home}

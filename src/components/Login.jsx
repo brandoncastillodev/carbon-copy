@@ -61,7 +61,7 @@ function Login() {
           <img className="pinA pinA2" src={group19}></img>
           <img className="pinB pinB2" src={group13}></img>
 
-          <Link to={"/login"}>
+          <Link to={"/home"}>
             <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
           </Link>
 
