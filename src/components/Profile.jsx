@@ -7,6 +7,7 @@ import group19 from "../assets/Group19.svg";
 import group13 from "../assets/Group13.svg";
 
 import home from "../assets/home.svg";
+import Cookies from "js-cookie";
 import carbonLogo from "../assets/carbonLogo.svg";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { alerts } from "../utils/alerts";
@@ -56,6 +57,8 @@ function Profile() {
   //modifica usuario
   function handleChange(e) {
     e.preventDefault();
+    const token = Cookies.get("token");
+    const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     if (password) {
       axios
@@ -63,7 +66,7 @@ function Profile() {
           name,
           email,
           password,
-        })
+        }, auth)
         .then((ok) => {
           const newU = ok.data[1][0];
           const newS = { email: newU.email, name: newU.name, id: newU.id };
@@ -79,7 +82,7 @@ function Profile() {
         .put(`https://carbon-copy.onrender.com/api/users/${id}`, {
           name,
           email,
-        })
+        }, auth)
         .then((ok) => {
           const newU = ok.data[1][0];
           alerts(`Success!`, `The user has been updated!`, "success");
@@ -119,10 +122,13 @@ function Profile() {
   //borra favorito
   function handleDisFav(sid) {
     let uid = id;
+    const token = Cookies.get("token");
+    const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
       .delete("https://carbon-copy.onrender.com/api/favorites/", {
         params: { uid, sid },
+        ...auth,
       })
       .then((ok) => {
         setModFav(!modFav);

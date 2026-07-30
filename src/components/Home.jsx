@@ -230,20 +230,22 @@ member.name)`
 
     let sid,
       uid = user.id;
+    const token = Cookies.get("token");
+    const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
       .post("https://carbon-copy.onrender.com/api/styles/register", {
         theme,
         mode,
         color,
-      })
+      }, auth)
       .then((ok) => {
         sid = ok.data[0].id;
         axios
           .post("https://carbon-copy.onrender.com/api/favorites/register", {
             uid,
             sid,
-          })
+          }, auth)
           .then((ok) => {
             if (ok.data[1]) {
               alerts("Success!", "You have saved the style!", "success");
@@ -265,6 +267,8 @@ member.name)`
   function handleDislike() {
     let sid,
       uid = user.id;
+    const token = Cookies.get("token");
+    const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
       .get("https://carbon-copy.onrender.com/api/styles/", {
@@ -275,6 +279,7 @@ member.name)`
         axios
           .delete("https://carbon-copy.onrender.com/api/favorites/", {
             params: { sid, uid },
+            headers: auth.headers,
           })
           .then((ok) => {
             alerts("Ok!", "You have deleted the style!", "info");
