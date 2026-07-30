@@ -138,7 +138,8 @@ function Register() {
 
               <div className="button-container2 top">
                 <button className="submitButton" disabled={loading}>
-                  {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Register"}
+                  {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
+                  <span style={{ marginLeft: loading ? 8 : 0 }}>Register</span>
                 </button>
               </div>
             </div>
@@ -146,7 +147,8 @@ function Register() {
 
           <div className="button-container">
             <button className="submitButton top" disabled={loading}>
-              {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Sign Up"}
+              {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
+              <span style={{ marginLeft: loading ? 8 : 0 }}>Sign Up</span>
             </button>
           </div>
         </div>

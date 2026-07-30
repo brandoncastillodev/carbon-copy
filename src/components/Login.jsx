@@ -135,7 +135,8 @@ function Login() {
 
               <div className="button-container2 top">
                 <button className="submitButton" disabled={loading}>
-                  {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Login"}
+                  {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
+                  <span style={{ marginLeft: loading ? 8 : 0 }}>Login</span>
                 </button>
               </div>
             </div>
@@ -143,7 +144,8 @@ function Login() {
 
           <div className="button-container top">
             <button className="submitButton" disabled={loading}>
-              {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Login"}
+              {loading && <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span>}
+              <span style={{ marginLeft: loading ? 8 : 0 }}>Login</span>
             </button>
           </div>
         </div>
