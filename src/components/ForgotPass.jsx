@@ -22,7 +22,7 @@ function ForgotPass() {
       .then((user) => {
         [id, password] = user.data;
         axios
-          .put(`http://localhost:3000/api/users/pass/${id}`, { password })
+          .put(`https://carbon-copy.onrender.com/api/users/pass/${id}`, { password })
           .then((mod) => {
             alerts(
               "Email send!",
