@@ -622,9 +622,10 @@ input:autofill {
 }
 
 .box {
-  min-height: 90vh;
+  min-height: 85vh;
   background: linear-gradient(154deg, #0047FF 0%, #DADADA 124.22%);
-  width: 19.6875rem;
+  width: 100%;
+  max-width: 22rem;
   border-radius: 25px;
   padding: 0.94rem;
   display: flex;
