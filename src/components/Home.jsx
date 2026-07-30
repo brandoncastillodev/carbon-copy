@@ -61,6 +61,24 @@ function Home() {
   const [theme, setTheme] = useState(fav.style || "vibrant_ink");
   const [color, setColor] = useState(fav.color || "#FFB800");
   const [colorEditor, setColorEditor] = useState("");
+
+  const fontMap = {
+    vibrant_ink: '"Fira Code", monospace',
+    nord_dark: '"JetBrains Mono", monospace',
+    one_dark: '"Fira Code", monospace',
+    gruvbox: '"IBM Plex Mono", monospace',
+    gruvbox_dark_hard: '"IBM Plex Mono", monospace',
+    dracula: '"JetBrains Mono", monospace',
+    cobalt: '"Space Mono", monospace',
+    monokai: '"Source Code Pro", monospace',
+    solarized_dark: '"Source Code Pro", monospace',
+    tomorrow_night: '"Inconsolata", monospace',
+    pastel_on_dark: '"Ubuntu Mono", monospace',
+    idle_fingers: '"JetBrains Mono", monospace',
+    mono_industrial: '"JetBrains Mono", monospace',
+    cloud9_night: '"Source Code Pro", monospace',
+    github_dark: '"JetBrains Mono", monospace',
+  };
   const [code, setCode] = useState(
     `let members = [{name:'Dylan',
 age: 22, area: 'Content'},
@@ -88,6 +106,16 @@ member.name)`
     const hexG = g.toString(16).padStart(2, "0");
     const hexB = b.toString(16).padStart(2, "0");
     setColorEditor(`#${hexR}${hexG}${hexB}`);
+  }, [theme]);
+
+  //aplicar fuente segun el style
+  useEffect(() => {
+    const font = fontMap[theme] || '"Fira Code", monospace';
+    const editor = acce.current?.editor;
+    if (editor) {
+      editor.setOptions({ fontFamily: font });
+    }
+    document.documentElement.style.setProperty("--editor-font", font);
   }, [theme]);
 
   //detectar estilo si esta en fav
