@@ -324,7 +324,7 @@ member.name)`
     };
     dispatch(setFav(emptyS));
     dispatch(setUser(emptyU));
-    if (user.id) alerts("Byebye!", "See you space cowboy!", "success");
+    if (user.id) alerts("Byebye!", "See you space cowboy!", "warning");
     Cookies.remove("token");
   }
 
