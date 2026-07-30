@@ -17,10 +17,12 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("kath@p5.com");
   const [password, setPassword] = useState("********");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   function handleLogin(e) {
     e.preventDefault();
+    setLoading(true);
     axios
       .post("https://carbon-copy.onrender.com/api/users/login", {
         email,
@@ -38,7 +40,8 @@ function Login() {
       })
       .catch((er) => {
         alerts("Oh no!", "The email or the password are incorrect!", "warning");
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -131,13 +134,17 @@ function Login() {
               </div>
 
               <div className="button-container2 top">
-                <button className="submitButton">Login</button>
+                <button className="submitButton" disabled={loading}>
+                  {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Login"}
+                </button>
               </div>
             </div>
           </div>
 
           <div className="button-container top">
-            <button className="submitButton">Login</button>
+            <button className="submitButton" disabled={loading}>
+              {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Login"}
+            </button>
           </div>
         </div>
       </form>

@@ -16,9 +16,11 @@ function Register() {
   const [name, setName] = useState("Katherine");
   const [email, setEmail] = useState("kath@p5.com");
   const [password, setPassword] = useState("********");
+  const [loading, setLoading] = useState(false);
 
   function handleRegister(e) {
     e.preventDefault();
+    setLoading(true);
     axios
       .post("https://carbon-copy.onrender.com/api/users/register", {
         name,
@@ -31,7 +33,8 @@ function Register() {
       })
       .catch((err) => {
         alerts("Oh oh!", `User couldn't register propertyly.`, "warning");
-      });
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -134,13 +137,17 @@ function Register() {
               </p>
 
               <div className="button-container2 top">
-                <button className="submitButton">Register</button>
+                <button className="submitButton" disabled={loading}>
+                  {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Register"}
+                </button>
               </div>
             </div>
           </div>
 
           <div className="button-container">
-            <button className="submitButton top">Sign Up</button>
+            <button className="submitButton top" disabled={loading}>
+              {loading ? <span className="loader" style={{ width: "18px", height: "18px", borderWidth: "2px", margin: 0 }}></span> : "Sign Up"}
+            </button>
           </div>
         </div>
       </form>
