@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ReactNotifications className="notis" />
         <App />
         <Analytics />
-      </HashRouter>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
