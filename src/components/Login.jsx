@@ -145,15 +145,9 @@ function Login() {
             </div>
           </div>
 
-          {loading ? (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <span className="loader" style={{ width: "30px", height: "30px" }}></span>
-            </div>
-          ) : (
-            <div className="button-container top">
-              <button className="submitButton">Login</button>
-            </div>
-          )}
+          <div className="button-container top" style={{ visibility: loading ? "hidden" : "visible" }}>
+            <button className="submitButton">Login</button>
+          </div>
         </div>
       </form>
     </div>
