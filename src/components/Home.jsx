@@ -19,27 +19,27 @@ import "ace-builds/src-noconflict/mode-ruby";
 import "ace-builds/src-noconflict/mode-golang";
 import "ace-builds/src-noconflict/mode-php";
 import "ace-builds/src-noconflict/theme-vibrant_ink";
-import "ace-builds/src-noconflict/theme-dawn";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-solarized_light";
 import "ace-builds/src-noconflict/theme-solarized_dark";
 import "ace-builds/src-noconflict/theme-tomorrow";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
-import "ace-builds/src-noconflict/theme-twilight";
-import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/theme-merbivore";
 import "ace-builds/src-noconflict/theme-terminal";
-import "ace-builds/src-noconflict/theme-textmate";
-import "ace-builds/src-noconflict/theme-kuroir";
 import "ace-builds/src-noconflict/theme-ambiance";
 import "ace-builds/src-noconflict/theme-nord_dark";
 import "ace-builds/src-noconflict/theme-one_dark";
 import "ace-builds/src-noconflict/theme-github_dark";
 import "ace-builds/src-noconflict/theme-gruvbox";
+import "ace-builds/src-noconflict/theme-gruvbox_dark_hard";
 import "ace-builds/src-noconflict/theme-cobalt";
+import "ace-builds/src-noconflict/theme-pastel_on_dark";
+import "ace-builds/src-noconflict/theme-idle_fingers";
+import "ace-builds/src-noconflict/theme-mono_industrial";
+import "ace-builds/src-noconflict/theme-cloud9_night";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/userState";
 import { setFav } from "../state/favState";
@@ -352,24 +352,24 @@ member.name)`
               <option value="vibrant_ink">Style</option>
               <option value="ambiance">Ambience</option>
               <option value="chaos">Chaos</option>
-              <option value="dawn">Dawn</option>
               <option value="dracula">Dracula</option>
               <option value="github">Github</option>
-              <option value="kuroir">Kuroir</option>
               <option value="monokai">Monokai</option>
               <option value="solarized_dark">Solarized Dark</option>
               <option value="solarized_light">Solarized Light</option>
-              <option value="textmate">Text Mate</option>
               <option value="terminal">Terminal</option>
               <option value="tomorrow">Tomorrow</option>
               <option value="tomorrow_night">Tomorrow Night</option>
-              <option value="twilight">Twilight</option>
-              <option value="xcode">XCode</option>
               <option value="nord_dark">Nord Dark</option>
               <option value="one_dark">One Dark</option>
               <option value="github_dark">GitHub Dark</option>
               <option value="gruvbox">Gruvbox</option>
+              <option value="gruvbox_dark_hard">Gruvbox Dark Hard</option>
               <option value="cobalt">Cobalt</option>
+              <option value="pastel_on_dark">Pastel on Dark</option>
+              <option value="idle_fingers">Idle Fingers</option>
+              <option value="mono_industrial">Mono Industrial</option>
+              <option value="cloud9_night">Cloud9 Night</option>
             </select>
             <select
               value={mode}
