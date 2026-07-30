@@ -13,6 +13,7 @@ function ForgotPass() {
   const [email, setEmail] = useState("kath@p5.com");
   const [loading, setLoading] = useState(false);
   const [timeoutMsg, setTimeoutMsg] = useState(false);
+  const [newPass, setNewPass] = useState(null);
   const navigate = useNavigate();
   let id, password;
 
@@ -20,27 +21,22 @@ function ForgotPass() {
     e.preventDefault();
     setLoading(true);
     setTimeoutMsg(false);
+    setNewPass(null);
 
     const timer = setTimeout(() => setTimeoutMsg(true), 10000);
 
     axios
       .post(`https://carbon-copy.onrender.com/api/users/forgot/${email}`)
       .then((user) => {
+        clearTimeout(timer);
         [id, password] = user.data;
         axios
           .put(`https://carbon-copy.onrender.com/api/users/pass/${id}`, { password })
           .then((mod) => {
-            clearTimeout(timer);
             setLoading(false);
-            alerts(
-              "Email send!",
-              "Check your email for a new passcode!",
-              "success"
-            );
-            navigate("/login");
+            setNewPass(password);
           })
           .catch((err) => {
-            clearTimeout(timer);
             setLoading(false);
             console.log(err);
           });
@@ -124,7 +120,16 @@ function ForgotPass() {
                 <Link to="/login">Log in</Link>
               </p>
 
-              {loading ? (
+              {newPass ? (
+                <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                  <p style={{ color: "#FFF", fontSize: "13px" }}>Your new password is:</p>
+                  <p style={{ color: "#FFB800", fontSize: "24px", fontWeight: "bold", letterSpacing: "4px", margin: "0.5rem 0" }}>{newPass}</p>
+                  <p style={{ color: "#FFF", fontSize: "12px" }}>Use it to log in and change it later.</p>
+                  <Link to="/login">
+                    <button className="submitButton" style={{ marginTop: "1rem" }}>Go to Login</button>
+                  </Link>
+                </div>
+              ) : loading ? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <span className="loader" style={{ width: "30px", height: "30px" }}></span>
                 </div>
@@ -140,7 +145,7 @@ function ForgotPass() {
               )}
             </div>
           </div>
-          <div className="button-container" style={{ visibility: loading ? "hidden" : "visible" }}>
+          <div className="button-container" style={{ visibility: loading || newPass ? "hidden" : "visible" }}>
             <button className="submitButton top">Send</button>
           </div>
         </div>
