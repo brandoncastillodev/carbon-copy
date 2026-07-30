@@ -132,6 +132,7 @@ member.name)`
   useEffect(() => {
     let uid = user.id;
     let sid;
+    const token = Cookies.get("token");
 
     axios
       .get("https://carbon-copy.onrender.com/api/styles/", {
@@ -142,6 +143,7 @@ member.name)`
         axios
           .get("https://carbon-copy.onrender.com/api/favorites/", {
             params: { sid, uid },
+            headers: { Authorization: `Bearer ${token}` },
           })
           .then((ok) => {
             if (ok.data.id) setLike(true);

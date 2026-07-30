@@ -38,8 +38,11 @@ function Profile() {
 
   //obtener usuario
   useEffect(() => {
+    const token = Cookies.get("token");
     axios
-      .get(`https://carbon-copy.onrender.com/api/users/${id}`)
+      .get(`https://carbon-copy.onrender.com/api/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((cok) => {
         dispatch(
           setUser({
@@ -99,8 +102,11 @@ function Profile() {
   useEffect(() => {
     setLoadingFavs(true);
     const uid = id;
+    const token = Cookies.get("token");
     axios
-      .get(`https://carbon-copy.onrender.com/api/favorites/${uid}`)
+      .get(`https://carbon-copy.onrender.com/api/favorites/${uid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((fav) => setFavs(fav.data))
       .catch((err) => console.log(err))
       .finally(() => setLoadingFavs(false));
