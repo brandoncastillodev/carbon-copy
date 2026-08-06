@@ -1,7 +1,12 @@
 import { Navigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import type { ReactNode } from "react";
 
-function ProtectedRoute({ children }) {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+function ProtectedRoute({ children }: ProtectedRouteProps): ReactNode {
   const location = useLocation();
   const token = Cookies.get("token");
 

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import home from "../assets/home.svg";
 import carbonLogo from "../assets/carbonLogo.svg";
 import group3 from "../assets/Group3.svg";
@@ -8,16 +8,16 @@ import group13 from "../assets/Group13.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { alerts } from "../utils/alerts";
 import axios from "axios";
+import { API_BASE } from "../config";
 
 function ForgotPass() {
-  const [email, setEmail] = useState("kath@p5.com");
-  const [loading, setLoading] = useState(false);
-  const [timeoutMsg, setTimeoutMsg] = useState(false);
-  const [newPass, setNewPass] = useState(null);
+  const [email, setEmail] = useState<string>("kath@p5.com");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [timeoutMsg, setTimeoutMsg] = useState<boolean>(false);
+  const [newPass, setNewPass] = useState<string | null>(null);
   const navigate = useNavigate();
-  let id, password;
 
-  function handleForgot(e) {
+  function handleForgot(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     setLoading(true);
     setTimeoutMsg(false);
@@ -26,27 +26,26 @@ function ForgotPass() {
     const timer = setTimeout(() => setTimeoutMsg(true), 10000);
 
     axios
-      .post(`https://carbon-copy.onrender.com/api/users/forgot/${email}`)
+      .post(`${API_BASE}/forgot/${email}`)
       .then((user) => {
         clearTimeout(timer);
-        [id, password] = user.data;
+        const [id, password] = user.data as [string, string];
         axios
-          .put(`https://carbon-copy.onrender.com/api/users/pass/${id}`, { password })
-          .then((mod) => {
+          .put(`${API_BASE}/users/pass/${id}`, { password })
+          .then(() => {
             setLoading(false);
             setNewPass(password);
           })
-          .catch((err) => {
+          .catch(() => {
             setLoading(false);
-            console.log(err);
           });
       })
-      .catch((err) => {
+      .catch(() => {
         clearTimeout(timer);
         setLoading(false);
         alerts(
-          "Email don't register!",
-          "The email you enter is not register.",
+          "Email not registered!",
+          "The email you entered is not registered.",
           "warning"
         );
       });
@@ -66,8 +65,8 @@ function ForgotPass() {
 
           <div className="linea"></div>
 
-          <img className="pinA pinA2" src={group19}></img>
-          <img className="pinB pinB2" src={group13}></img>
+          <img className="pinA pinA2" src={group19} alt="pinA"></img>
+          <img className="pinB pinB2" src={group13} alt="pinB"></img>
 
           <Link to={"/home"}>
             <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
@@ -99,7 +98,7 @@ function ForgotPass() {
                     <span className="green">let</span> user = &#123;
                   </p>
                   <p className="font-me">
-                    email: <span>'{email.substring(0, 27)}'</span>&#125;
+                    email: <span>&apos;{email.substring(0, 27)}&apos;</span>&#125;
                   </p>
                 </div>
               </div>

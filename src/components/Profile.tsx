@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import group4 from "../assets/Group4.svg";
 import group5 from "../assets/Group5.svg";
 import group8 from "../assets/Group8.svg";
 import group19 from "../assets/Group19.svg";
 import group13 from "../assets/Group13.svg";
-
 import home from "../assets/home.svg";
 import Cookies from "js-cookie";
 import carbonLogo from "../assets/carbonLogo.svg";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { alerts } from "../utils/alerts";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../state/userState";
 import { setFav } from "../state/favState";
+import { API_BASE } from "../config";
+import type { RootState } from "../state/store";
 
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const user = useSelector((state) => state.user);
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [password, setPass] = useState("");
-  const [favs, setFavs] = useState([]);
-  const [modFav, setModFav] = useState(false);
-  const [loadingFavs, setLoadingFavs] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const user = useSelector((state: RootState) => state.user);
+  const [name, setName] = useState<string>(user.name || "");
+  const [email, setEmail] = useState<string>(user.email || "");
+  const [password, setPass] = useState<string>("");
+  const [favs, setFavs] = useState<FavoriteItem[]>([]);
+  const [modFav, setModFav] = useState<boolean>(false);
+  const [loadingFavs, setLoadingFavs] = useState<boolean>(true);
 
-  function formatName(style, format) {
+  function formatName(style: string, format: string): string {
     const s = style
       .replace(/_/g, " ")
       .replace(/\b\w/g, (c) => c.toUpperCase());
@@ -40,7 +40,7 @@ function Profile() {
   useEffect(() => {
     const token = Cookies.get("token");
     axios
-      .get(`https://carbon-copy.onrender.com/api/users/${id}`, {
+      .get(`${API_BASE}/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((cok) => {
@@ -54,18 +54,18 @@ function Profile() {
         setName(cok.data.name);
         setEmail(cok.data.email);
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch(() => {});
+  }, [id, dispatch]);
 
   //modifica usuario
-  function handleChange(e) {
+  function handleChange(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const token = Cookies.get("token");
     const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     if (password) {
       axios
-        .put(`https://carbon-copy.onrender.com/api/users/pass/${id}`, {
+        .put(`${API_BASE}/users/pass/${id}`, {
           name,
           email,
           password,
@@ -77,12 +77,12 @@ function Profile() {
           alerts(`Success!`, `The user has been updated!`, "success");
           setPass("");
         })
-        .catch((er) => {
+        .catch(() => {
           alerts(`Rats!`, `The user couldn't be updated.`, "warning");
         });
     } else {
       axios
-        .put(`https://carbon-copy.onrender.com/api/users/${id}`, {
+        .put(`${API_BASE}/users/${id}`, {
           name,
           email,
         }, auth)
@@ -92,7 +92,7 @@ function Profile() {
           const newS = { email: newU.email, name: newU.name, id: newU.id };
           dispatch(setUser(newS));
         })
-        .catch((er) => {
+        .catch(() => {
           alerts(`Rats!`, `The user couldn't be updated.`, "warning");
         });
     }
@@ -104,17 +104,17 @@ function Profile() {
     const uid = id;
     const token = Cookies.get("token");
     axios
-      .get(`https://carbon-copy.onrender.com/api/favorites/${uid}`, {
+      .get(`${API_BASE}/favorites/${uid}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((fav) => setFavs(fav.data))
-      .catch((err) => console.log(err))
+      .catch(() => {})
       .finally(() => setLoadingFavs(false));
-  }, [modFav]);
+  }, [modFav, id]);
 
   //selecciona favorito
-  function handleFav(id, style, format, color) {
-    const selectFav = {
+  function handleFav(id: string, style: string, format: string, color: string): void {
+    const selectFav: FavState = {
       id,
       style,
       format,
@@ -126,21 +126,21 @@ function Profile() {
   }
 
   //borra favorito
-  function handleDisFav(sid) {
-    let uid = id;
+  function handleDisFav(sid: string): void {
+    const uid = id;
     const token = Cookies.get("token");
     const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
-      .delete("https://carbon-copy.onrender.com/api/favorites/", {
+      .delete(`${API_BASE}/favorites/`, {
         params: { uid, sid },
         ...auth,
       })
-      .then((ok) => {
+      .then(() => {
         setModFav(!modFav);
         alerts("Ok!", "You have deleted the style!", "info");
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }
 
   return (
@@ -154,8 +154,8 @@ function Profile() {
           </Link>
         </div>
         <div className="linea"></div>
-        <img className="pinA pinA2" src={group19}></img>
-        <img className="pinB pinB2" src={group13}></img>
+        <img className="pinA pinA2" src={group19} alt="pinA"></img>
+        <img className="pinB pinB2" src={group13} alt="pinB"></img>
         <Link to={"/home"}>
           <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
         </Link>
@@ -165,7 +165,7 @@ function Profile() {
           <form onSubmit={handleChange}>
             <div className="input-box mini-top">
               <div className="user-logo">
-                <img src={group4} alt="group5"></img>
+                <img src={group4} alt="group4"></img>
               </div>
               <input
                 onChange={(e) => setName(e.target.value)}
@@ -188,7 +188,7 @@ function Profile() {
               ></input>
             </div>
             <div className="input-box">
-              <img src={group8} alt="group5"></img>
+              <img src={group8} alt="group8"></img>
               <input
                 onChange={(e) => setPass(e.target.value)}
                 placeholder={"********"}
@@ -214,8 +214,8 @@ function Profile() {
               <p style={{ color: "white", textAlign: "center", padding: "1rem" }}>
                 No favorites yet
               </p>
-            ) : favs.map((fav, id) => (
-                <div className="one-user-fav mini-top" key={id}>
+            ) : favs.map((fav, index) => (
+                <div className="one-user-fav mini-top" key={index}>
                 {formatName(fav.style.style, fav.style.format)}
                 <div
                   className="color-fav"

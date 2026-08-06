@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { API_BASE } from "../config";
 import AceEditor from "react-ace";
 import { detect } from "program-language-detector";
 import "ace-builds/src-noconflict/ace";
@@ -55,19 +56,20 @@ import exit from "../assets/exit.svg";
 import html2canvas from "html2canvas";
 import download from "downloadjs";
 import Cookies from "js-cookie";
+import type { RootState } from "../state/store";
 
 function Home() {
-  const acce = useRef(null);
+  const acce = useRef<any>(null);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const fav = useSelector((state) => state.fav);
-  const [like, setLike] = useState(false);
-  const [mode, setMode] = useState(fav.format || null);
-  const [theme, setTheme] = useState(fav.style || "vibrant_ink");
-  const [color, setColor] = useState(fav.color || "#FFB800");
-  const [colorEditor, setColorEditor] = useState("");
+  const user = useSelector((state: RootState) => state.user);
+  const fav = useSelector((state: RootState) => state.fav);
+  const [like, setLike] = useState<boolean>(false);
+  const [mode, setMode] = useState<string | null>(fav.format || null);
+  const [theme, setTheme] = useState<string>(fav.style || "vibrant_ink");
+  const [color, setColor] = useState<string>(fav.color || "#FFB800");
+  const [colorEditor, setColorEditor] = useState<string>("");
 
-  const fontMap = {
+  const fontMap: Record<string, string> = {
     vibrant_ink: '"Fira Code", monospace',
     nord_dark: '"JetBrains Mono", monospace',
     one_dark: '"Fira Code", monospace',
@@ -89,10 +91,10 @@ function Home() {
     kr_theme: '"Fira Code", monospace',
     gob: '"Space Mono", monospace',
   };
-  const [code, setCode] = useState(
+  const [code, setCode] = useState<string>(
     `let members = [{name:'Dylan',
 age: 22, area: 'Content'},
-{name:'Lucia' , age: 25, 
+{name:'Lucia' , age: 25,
 area: 'Intro'},
 {name:'Mar' , age: 24,
 area: 'Bootcamp'}]
@@ -104,6 +106,7 @@ member.name)`
 
   //detectar color de fondo de ace-editor
   useEffect(() => {
+    if (!acce.current) return;
     const editorElement = acce.current.editor.container;
     const backgroundColor = window
       .getComputedStyle(editorElement)
@@ -130,18 +133,17 @@ member.name)`
 
   //detectar estilo si esta en fav
   useEffect(() => {
-    let uid = user.id;
-    let sid;
+    const uid = user.id;
     const token = Cookies.get("token");
 
     axios
-      .get("https://carbon-copy.onrender.com/api/styles/", {
+      .get(`${API_BASE}/styles/`, {
         params: { theme, mode, color },
       })
       .then((ok) => {
-        sid = ok.data.id;
+        const sid = ok.data.id;
         axios
-          .get("https://carbon-copy.onrender.com/api/favorites/", {
+          .get(`${API_BASE}/favorites/`, {
             params: { sid, uid },
             headers: { Authorization: `Bearer ${token}` },
           })
@@ -149,43 +151,43 @@ member.name)`
             if (ok.data.id) setLike(true);
             else setLike(false);
           })
-          .catch((er) => console.log(er));
+          .catch(() => {});
       })
-      .catch((er) => console.log(er));
-  }, [theme, mode, color]);
+      .catch(() => {});
+  }, [theme, mode, color, user.id]);
 
   //busca cookies
   useEffect(() => {
     axios
-      .post("https://carbon-copy.onrender.com/api/users/me", {
+      .post(`${API_BASE}/users/me`, {
         token: Cookies.get("token"),
       })
       .then((cok) => {
         dispatch(setUser(cok.data));
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch(() => {});
+  }, [dispatch]);
 
   //detectar el lenguaje
   useEffect(() => {
-    let lengDetectado = detect(code).toLowerCase();
+    const lengDetectado = detect(code).toLowerCase();
 
     if (!fav.id) {
-      if (lengDetectado == "c++" || lengDetectado == "c") setMode("c_cpp");
-      else if (lengDetectado == "go") setMode("goland");
+      if (lengDetectado === "c++" || lengDetectado === "c") setMode("c_cpp");
+      else if (lengDetectado === "go") setMode("golang");
       else {
         setMode(lengDetectado);
       }
     }
-  }, [code]);
+  }, [code, fav.id]);
 
   //manejar option with keys
-  const handleKeyDownM = (event) => {
+  const handleKeyDownM = (event: React.KeyboardEvent<HTMLSelectElement>): void => {
     const { key } = event;
 
     if (key === "ArrowUp" || key === "ArrowDown") {
       event.preventDefault();
-      const modeElement = document.getElementById("modeSelect");
+      const modeElement = document.getElementById("modeSelect") as HTMLSelectElement;
       const modeIndex = modeElement.selectedIndex;
       const newModeIndex = key === "ArrowUp" ? modeIndex - 1 : modeIndex + 1;
 
@@ -195,12 +197,12 @@ member.name)`
       }
     }
   };
-  const handleKeyDownT = (event) => {
+  const handleKeyDownT = (event: React.KeyboardEvent<HTMLSelectElement>): void => {
     const { key } = event;
 
     if (key === "ArrowUp" || key === "ArrowDown") {
       event.preventDefault();
-      const themeElement = document.getElementById("themeSelect");
+      const themeElement = document.getElementById("themeSelect") as HTMLSelectElement;
       const themeIndex = themeElement.selectedIndex;
       const newThemeIndex = key === "ArrowUp" ? themeIndex - 1 : themeIndex + 1;
 
@@ -210,12 +212,12 @@ member.name)`
       }
     }
   };
-  const handleKeyDownC = (event) => {
+  const handleKeyDownC = (event: React.KeyboardEvent<HTMLSelectElement>): void => {
     const { key } = event;
 
     if (key === "ArrowUp" || key === "ArrowDown") {
       event.preventDefault();
-      const colorElement = document.getElementById("colorSelect");
+      const colorElement = document.getElementById("colorSelect") as HTMLSelectElement;
       const colorIndex = colorElement.selectedIndex;
       const newColorIndex = key === "ArrowUp" ? colorIndex - 1 : colorIndex + 1;
 
@@ -227,24 +229,26 @@ member.name)`
   };
 
   //likear estilo
-  function handleLike() {
-    if (!user.id) alerts("Hey!", "You need to login first!", "warning");
+  function handleLike(): void {
+    if (!user.id) {
+      alerts("Hey!", "You need to login first!", "warning");
+      return;
+    }
 
-    let sid,
-      uid = user.id;
+    const uid = user.id;
     const token = Cookies.get("token");
     const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
-      .post("https://carbon-copy.onrender.com/api/styles/register", {
+      .post(`${API_BASE}/styles/register`, {
         theme,
         mode,
         color,
       }, auth)
       .then((ok) => {
-        sid = ok.data[0].id;
+        const sid = ok.data[0].id;
         axios
-          .post("https://carbon-copy.onrender.com/api/favorites/register", {
+          .post(`${API_BASE}/favorites/register`, {
             uid,
             sid,
           }, auth)
@@ -254,70 +258,65 @@ member.name)`
               setLike(true);
             }
           })
-          .catch((err) => {
-            alerts("Sorry!", "We couldn't saved the style!", "warning");
-            console.log(err);
+          .catch(() => {
+            alerts("Sorry!", "We couldn't save the style!", "warning");
           });
       })
-      .catch((err) => {
-        console.log(err);
-        alerts("Sorry!", "We couldn't saved the style!", "warning");
+      .catch(() => {
+        alerts("Sorry!", "We couldn't save the style!", "warning");
       });
   }
 
   //dislikear estilo
-  function handleDislike() {
-    let sid,
-      uid = user.id;
+  function handleDislike(): void {
+    const uid = user.id;
     const token = Cookies.get("token");
     const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     axios
-      .get("https://carbon-copy.onrender.com/api/styles/", {
+      .get(`${API_BASE}/styles/`, {
         params: { theme, mode, color },
       })
       .then((ok) => {
-        sid = ok.data.id;
+        const sid = ok.data.id;
         axios
-          .delete("https://carbon-copy.onrender.com/api/favorites/", {
+          .delete(`${API_BASE}/favorites/`, {
             params: { sid, uid },
             headers: auth.headers,
           })
-          .then((ok) => {
+          .then(() => {
             alerts("Ok!", "You have deleted the style!", "info");
             setLike(false);
           })
-          .catch((err) => {
-            console.log(err);
-            alerts("Sorry!", "We couldn't deleted the style!", "warning");
+          .catch(() => {
+            alerts("Sorry!", "We couldn't delete the style!", "warning");
           });
       })
-      .catch((err) => console.log(err));
+      .catch(() => {});
   }
 
   //descargar imagen
-  function handleDownload() {
-    html2canvas(document.getElementById("ace-react"))
-      .then((canvas) => {
+  function handleDownload(): void {
+    html2canvas(document.getElementById("ace-react")!)
+      .then((canvas: HTMLCanvasElement) => {
         download(canvas.toDataURL("image/png"), "carbon-copy.png", "image/png");
-        alerts("Got it!", "Image download it successfully!", "success");
+        alerts("Got it!", "Image downloaded successfully!", "success");
       })
-      .catch(function (error) {
-        console.error("oops, something went wrong!", error);
+      .catch(() => {
         alerts("Oops", "Something went wrong!", "warning");
       });
   }
 
   //cerrar sesión
-  function logOut() {
-    const emptyS = {
+  function logOut(): void {
+    const emptyS: FavState = {
       id: null,
       format: null,
       style: null,
       color: null,
     };
 
-    const emptyU = {
+    const emptyU: UserState = {
       id: null,
       name: null,
       email: null,
@@ -329,8 +328,8 @@ member.name)`
   }
 
   //irme a mi perfil
-  function cerrarFav() {
-    const emptyS = {
+  function cerrarFav(): void {
+    const emptyS: FavState = {
       id: null,
       format: null,
       style: null,
@@ -366,14 +365,12 @@ member.name)`
             <Link to={`/user/${user.id}`} onClick={cerrarFav}>
               <img src={group34} alt="vector"></img>
             </Link>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
         <div className="linea"></div>
 
-        <img className="pinA pinA2" loading="lazy" src={group19}></img>
-        <img className="pinB pinB2" loading="lazy" src={group13}></img>
+        <img className="pinA pinA2" loading="lazy" src={group19} alt="pinA"></img>
+        <img className="pinB pinB2" loading="lazy" src={group13} alt="pinB"></img>
         <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
 
         <p className="subtitulo top font-me"> Give style to your code</p>
@@ -409,7 +406,7 @@ member.name)`
               <option value="gob">Gob</option>
             </select>
             <select
-              value={mode}
+              value={mode || ""}
               onChange={(e) => setMode(e.target.value)}
               className="selects format font-me"
               onKeyDown={handleKeyDownM}
@@ -418,7 +415,7 @@ member.name)`
               <option value="apex">Format</option>
               <option value="c_cpp">C/C++</option>
               <option value="css">CSS</option>
-              <option value="goland">Go</option>
+              <option value="golang">Go</option>
               <option value="html">HTML</option>
               <option value="java">Java</option>
               <option value="javascript">JavaScript</option>
@@ -483,9 +480,7 @@ member.name)`
               <Link to={`/user/${user.id}`} onClick={cerrarFav} aria-label="Profile">
                 <img src={group34} alt="Profile"></img>
               </Link>
-            ) : (
-              <></>
-            )}
+            ) : null}
           </div>
         </div>
         <div
@@ -497,15 +492,15 @@ member.name)`
             <img src={group29} alt="group29"></img>
             <AceEditor
               className="ace"
-              mode={mode}
+              mode={mode || "javascript"}
               theme={theme}
               value={code}
               ref={acce}
-              onChange={(newCode) => setCode(newCode)}
+              onChange={(newCode: string) => setCode(newCode)}
               width="100%"
               height="100%"
-              fontSize={"14px"}
-              maxLines={"auto"}
+              fontSize={14}
+              maxLines={"auto" as any}
               showGutter={false}
               highlightActiveLine={false}
               enableBasicAutocompletion={false}

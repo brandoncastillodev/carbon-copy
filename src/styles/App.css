@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code:wght@400;700&family=IBM+Plex+Mono&family=Inconsolata&family=JetBrains+Mono&family=Source+Code+Pro&family=Space+Mono&family=Ubuntu+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 .portada-welcome {
   background: url("../assets/Group1.svg"), linear-gradient(154deg, #0047FF 0%, #DADADA 124.22%);
   width: 19.6875rem;
@@ -192,7 +192,7 @@
   border-radius: 0 25px 25px 25px;
   background: #0047FF;
   padding: 0.94rem;
-  min-height: 117px;
+  min-height: 117p;
   color: #FFF;
 }
 
@@ -277,10 +277,6 @@
   color: #FFF;
   font-size: 14px;
   cursor: pointer;
-  min-width: 100px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .pinA2 {
@@ -382,10 +378,7 @@
   margin-left: 5px;
   font-size: 20px;
   border-radius: 0 10px 25px 10px;
-  font-family: var(--editor-font, "Fira Code", monospace);
 }
-
-
 
 @media (min-width: 800px) {
   .selects-div {
@@ -564,19 +557,6 @@ input:focus {
   box-shadow: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s !important;
-  -webkit-text-fill-color: #FFF !important;
-  caret-color: #FFB800 !important;
-}
-
-input:autofill {
-  background-color: transparent !important;
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -591,21 +571,6 @@ input:autofill {
 
 .font-me {
   font-family: "Poppins", sans-serif !important;
-}
-
-.loader {
-  width: 30px;
-  height: 30px;
-  border: 3px solid rgba(255,255,255,0.2);
-  border-top-color: #FFF;
-  border-right-color: rgba(255,255,255,0.4);
-  border-radius: 50%;
-  animation: spin 0.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  margin: 1rem auto;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
 
 .notis {

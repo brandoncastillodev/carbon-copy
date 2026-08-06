@@ -1,14 +1,10 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import home from "../assets/home.svg";
 import carbonLogo from "../assets/carbonLogo.svg";
-import group3 from "../assets/Group3.svg";
 import group19 from "../assets/Group19.svg";
 import group13 from "../assets/Group13.svg";
-import { Link, useNavigate } from "react-router-dom";
 
 function NotFound() {
-  const navigate = useNavigate();
-
   return (
     <div className="all">
       <div className="box font-me">
@@ -19,21 +15,15 @@ function NotFound() {
             </div>
           </Link>
         </div>
-
         <div className="linea"></div>
-
-        <img className="pinA pinA2" src={group19}></img>
-        <img className="pinB pinB2" src={group13}></img>
-
+        <img className="pinA pinA2" src={group19} alt="pinA"></img>
+        <img className="pinB pinB2" src={group13} alt="pinB"></img>
         <Link to={"/home"}>
           <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
         </Link>
-
-        <p className="subtitulo top"> Give style to your code</p>
-
+        <p className="subtitulo top font-me"> Give style to your code</p>
         <br />
-
-        <p className="texto-not-found">Sorry, this page doesn't exist.</p>
+        <p className="texto-not-found">Sorry, this page doesn&apos;t exist.</p>
       </div>
     </div>
   );

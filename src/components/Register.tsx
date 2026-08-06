@@ -1,52 +1,42 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 import home from "../assets/home.svg";
 import carbonLogo from "../assets/carbonLogo.svg";
 import group3 from "../assets/Group3.svg";
+import group4 from "../assets/Group4.svg";
 import group5 from "../assets/Group5.svg";
 import group8 from "../assets/Group8.svg";
 import group19 from "../assets/Group19.svg";
 import group13 from "../assets/Group13.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUser } from "../state/userState";
 import { alerts } from "../utils/alerts";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { API_BASE } from "../config";
 
-function Login() {
+function Register() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("kath@p5.com");
-  const [password, setPassword] = useState("********");
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const [name, setName] = useState<string>("Katherine");
+  const [email, setEmail] = useState<string>("kath@p5.com");
+  const [password, setPassword] = useState<string>("********");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function handleLogin(e) {
+  function handleRegister(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("https://carbon-copy.onrender.com/api/users/login", {
-        email,
-        password,
+      .post(`${API_BASE}/users/register`, { name, email, password })
+      .then(() => {
+        alerts("Success!", `User created correctly!`, "success");
+        navigate("/login");
       })
-      .then((user) => {
-        dispatch(setUser(user.data.payload));
-        Cookies.set("token", user.data.token);
-        alerts(
-          `Welcome ${user.data.payload.name}!`,
-          `The user has logged in successfully!`,
-          "success"
-        );
-        navigate("/home");
-      })
-      .catch((er) => {
-        alerts("Oh no!", "The email or the password are incorrect!", "warning");
+      .catch(() => {
+        alerts("Oh oh!", `User couldn't register properly.`, "warning");
       })
       .finally(() => setLoading(false));
   }
 
   return (
     <div className="all">
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <div className="box">
           <div className="navbar">
             <Link to={"/home"}>
@@ -58,8 +48,8 @@ function Login() {
 
           <div className="linea"></div>
 
-          <img className="pinA pinA2" src={group19}></img>
-          <img className="pinB pinB2" src={group13}></img>
+          <img className="pinA pinA2" src={group19} alt="pinA"></img>
+          <img className="pinB pinB2" src={group13} alt="pinB"></img>
 
           <Link to={"/home"}>
             <img className="titulo top" src={carbonLogo} alt="carbonLogo"></img>
@@ -69,7 +59,7 @@ function Login() {
 
           <div className="solapa top font-me">
             <img src={group3} alt="group3"></img>
-            <p>Login</p>
+            <p>Sign up</p>
           </div>
 
           <div className="contenido">
@@ -88,52 +78,62 @@ function Login() {
               <div className="preview">
                 <div className="texto">
                   <p className="font-me">
-                    <span className="green">let</span> user = &#123;
+                    <span className="green">let</span> user = &#123; name:
+                    <span> &apos;{name.substring(0, 25)}&apos;</span>,
                   </p>
                   <p className="font-me">
-                    email: <span>'{email.substring(0, 27)}'</span>,
+                    email: <span>&apos;{email.substring(0, 25)}&apos;</span>,
                   </p>
                   <p className="font-me">
-                    password: <span>'{"*".repeat(password.length)}'</span>&#125;
+                    password:{" "}
+                    <span>
+                      &apos;{"*".repeat(password.substring(0, 10).length)}&apos;
+                    </span>
+                    &#125;
                   </p>
                 </div>
               </div>
 
               <div className="input-box top">
-                <img src={group5} alt="group5"></img>
+                <div className="user-logo">
+                  <img src={group4} alt="group4"></img>
+                </div>
                 <input
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={name}
+                  type="text"
                   className="font-me"
-                  placeholder={email}
-                  type="email"
-                  maxLength={60}
+                  maxLength={40}
                   required
-                  autoComplete="off"
                 ></input>
               </div>
 
               <div className="input-box">
-                <img src={group8} alt="group5"></img>
+                <img src={group5} alt="group5"></img>
+                <input
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={email}
+                  type="email"
+                  className="font-me"
+                  maxLength={60}
+                  required
+                ></input>
+              </div>
+
+              <div className="input-box">
+                <img src={group8} alt="group8"></img>
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={password}
                   type="password"
                   maxLength={20}
                   required
-                  autoComplete="new-password"
                 ></input>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <p className="forgotPassword font-me">
-                  <Link to="/register">Register</Link>
-                </p>
-                <p className="forgotPassword font-me">
-                  <Link to={"/forgot"}>Forgot your password</Link>
-                </p>
-              </div>
+              <p className="forgotPassword font-me">
+                <Link to="/login">Log in</Link>
+              </p>
 
               {loading ? (
                 <div style={{ display: "flex", justifyContent: "center" }}>
@@ -141,14 +141,14 @@ function Login() {
                 </div>
               ) : (
                 <div className="button-container2 top">
-                  <button className="submitButton">Login</button>
+                  <button className="submitButton">Register</button>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="button-container top" style={{ visibility: loading ? "hidden" : "visible" }}>
-            <button className="submitButton">Login</button>
+          <div className="button-container" style={{ visibility: loading ? "hidden" : "visible" }}>
+            <button className="submitButton top">Sign Up</button>
           </div>
         </div>
       </form>
@@ -156,4 +156,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
